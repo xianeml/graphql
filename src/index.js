@@ -1,4 +1,4 @@
-const { graphQLServer, GraphQLServer } = require('graphql-yoga');
+const { ApolloServer } = require('apollo-server');
 
 let links = [
   {
@@ -42,11 +42,14 @@ const resolvers = {
   // },
 };
 
+const fs = require('fs');
+const path = require('path');
+
 // 스키마와 리졸버를 서버에 전달
-const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
+const server = new ApolloServer({
+  typeDefs: fs.readFileSync(path.join(__dirname, 'schema.graphql'), 'utf8'),
   resolvers,
 });
 
 // GraphQL playground 확인 가능
-server.start(() => console.log('localhost:4000에서 가동중'));
+server.listen().then(({ url }) => console.log(`Server is running on ${url}`));

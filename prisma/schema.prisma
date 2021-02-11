@@ -1,0 +1,21 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// DB 커넥션 정의
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// Prisma Client 생성한다고 알려줌
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Data model
+model Link {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  description String
+  url         String
+}
